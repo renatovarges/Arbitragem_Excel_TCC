@@ -33,28 +33,51 @@ try:
 
     with st.sidebar.expander("ℹ️ Sobre a planilha"):
         st.markdown("""
-        A planilha Excel gerada contém todos os jogos da rodada com
-        árbitro e estatísticas, formatação com cores por coluna e
-        cabeçalhos congelados.
-
-        > Se a escala ainda não foi divulgada, o árbitro aparece
-        > como **"A confirmar"**.
+        O sistema detecta os árbitros automaticamente quando o
+        Transfermarkt já publicou a escala. Para jogos ainda sem
+        escala, selecione o árbitro no menu (a escala da CBF sai antes).
+        As estatísticas vêm sozinhas.
         """)
 
-    # ── Preview dos confrontos ──────────────────────────────────────────────
+    # ── Carregar escala automática + lista de árbitros ───────────────────────
     confrontos_base = rodadas_data.get(str(rodada_sel), [])
-    st.subheader(f"📅 Confrontos — Rodada {rodada_sel}")
+
+    with st.spinner("Verificando escala e árbitros disponíveis..."):
+        escala_auto = scraper.get_escala_auto(rodada_sel)
+        lista_arbitros = scraper.get_lista_arbitros()
+
+    n_auto = len(escala_auto)
+    if n_auto == len(confrontos_base) and n_auto > 0:
+        st.success(f"✅ Escala detectada automaticamente ({n_auto}/{len(confrontos_base)} jogos).")
+    elif n_auto > 0:
+        st.info(f"ℹ️ {n_auto}/{len(confrontos_base)} jogos com escala automática. "
+                "Complete os demais nos menus abaixo.")
+    else:
+        st.warning("⚠️ Escala ainda não publicada no Transfermarkt. "
+                   "Selecione os árbitros manualmente abaixo "
+                   "(veja a escala no site da CBF).")
+
+    # ── Seleção de árbitros ──────────────────────────────────────────────────
+    st.subheader(f"🧑‍⚖️ Árbitros — Rodada {rodada_sel}")
+    opcoes = ["A confirmar"] + lista_arbitros
+    escala_final = {}
     cols = st.columns(2)
     for i, c in enumerate(confrontos_base):
-        cols[i % 2].markdown(f"**{c['mandante']}** × {c['visitante']}")
+        key = (scraper._norm(c["mandante"]), scraper._norm(c["visitante"]))
+        auto = escala_auto.get(key, "")
+        idx = opcoes.index(auto) if auto in opcoes else 0
+        escala_final[i] = cols[i % 2].selectbox(
+            f"{c['mandante']} × {c['visitante']}",
+            opcoes, index=idx, key=f"arb_{rodada_sel}_{i}",
+        )
 
     st.divider()
 
     # ── Geração ─────────────────────────────────────────────────────────────
     if st.button("📊 GERAR PLANILHA EXCEL", use_container_width=True, type="primary"):
-        with st.spinner("Buscando árbitros e estatísticas (pode levar até 30s)..."):
+        with st.spinner("Buscando estatísticas e faltas (pode levar ~1 min)..."):
             try:
-                dados = scraper.get_rodada_completa(rodada_sel)
+                dados = scraper.montar_dados(rodada_sel, escala_final)
             except Exception as e:
                 st.error(f"Erro ao buscar dados: {e}")
                 st.code(traceback.format_exc())
@@ -73,13 +96,6 @@ try:
             "Vermelhos (Total)": d["vermelhos_total"],
         } for d in dados])
         st.dataframe(df_preview, use_container_width=True)
-
-        confirmados = [d for d in dados if d["arbitro"] != "A confirmar"]
-        if not confirmados:
-            st.warning(
-                "⚠️ A escala desta rodada ainda não foi divulgada. "
-                "A planilha será gerada com 'A confirmar' nos campos de árbitro."
-            )
 
         # Excel
         with st.spinner("Montando planilha Excel..."):
