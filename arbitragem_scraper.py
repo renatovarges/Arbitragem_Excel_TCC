@@ -5,7 +5,6 @@ Faltas médias complementadas via Sofascore (busca por nome).
 """
 import json
 import re
-import time
 import unicodedata
 from pathlib import Path
 
@@ -89,6 +88,16 @@ def get_rodada_completa(rodada_num: int, buscar_faltas: bool = True) -> list[dic
     escala    = _get_escala_tm(rodada_num, confrontos)      # {(mand,vis): arbitro}
     stats_map = _get_all_stats_tm(rodada_num)               # {norm_nome: stats}
 
+    # Faltas (Sofascore) — buscadas em paralelo para os árbitros confirmados
+    faltas_map = {}
+    if buscar_faltas:
+        nomes = sorted({
+            escala.get((_norm(j["mandante"]), _norm(j["visitante"])), "")
+            for j in confrontos
+        } - {"", "A confirmar", "—"})
+        if nomes:
+            faltas_map = _faltas_em_lote(tuple(nomes))
+
     resultado = []
     for jogo in confrontos:
         mand = jogo["mandante"]
@@ -113,11 +122,6 @@ def get_rodada_completa(rodada_num: int, buscar_faltas: bool = True) -> list[dic
             else "—"
         )
 
-        # Faltas (Sofascore, best-effort)
-        faltas = "—"
-        if buscar_faltas and arb_nome not in ("A confirmar", "", "—"):
-            faltas = _get_faltas_media(arb_nome)
-
         resultado.append({
             "mandante":        mand,
             "visitante":       vis,
@@ -126,7 +130,7 @@ def get_rodada_completa(rodada_num: int, buscar_faltas: bool = True) -> list[dic
             "penaltis":        stats.get("penaltis", "—"),
             "amarelos_media":  am_media,
             "vermelhos_total": stats.get("vermelhos_total", "—"),
-            "faltas_media":    faltas,
+            "faltas_media":    faltas_map.get(arb_nome, "—"),
         })
 
     return resultado
@@ -248,17 +252,45 @@ def _get_all_stats_tm(rodada_num: int) -> dict:
 # ---------------------------------------------------------------------------
 
 @st.cache_data(ttl=86400, show_spinner=False)
-def _get_faltas_media(arbitro_nome: str, n_jogos: int = 5) -> str:
+def _faltas_em_lote(nomes: tuple) -> dict:
+    """
+    Calcula a média de faltas de vários árbitros em paralelo.
+    Retorna {nome_arbitro: "26.0" | "—"}.
+    Cacheado pelo conjunto de nomes (24h).
+    """
+    from concurrent.futures import ThreadPoolExecutor
+
+    out = {}
+    if not nomes:
+        return out
+
+    # Garante que a chave do proxy foi lida na thread principal antes
+    # de disparar as threads (st.secrets pode falhar dentro de threads).
+    http_client.prime()
+
+    with ThreadPoolExecutor(max_workers=min(6, len(nomes))) as ex:
+        futures = {ex.submit(_faltas_um, nome): nome for nome in nomes}
+        for fut in futures:
+            nome = futures[fut]
+            try:
+                out[nome] = fut.result()
+            except Exception:
+                out[nome] = "—"
+    return out
+
+
+def _faltas_um(arbitro_nome: str, n_jogos: int = 4) -> str:
     """
     Busca o árbitro pelo nome no Sofascore e calcula a média de faltas
-    (home + away) dos últimos n_jogos no Brasileirão.
+    (home + away) dos últimos n_jogos no Brasileirão. Função "pura"
+    (sem chamadas Streamlit) — segura para rodar em thread.
     """
     try:
-        # 1. Buscar ID do árbitro
+        # 1. ID do árbitro
         q = arbitro_nome.replace(" ", "%20")
         r = http_client.get(
             f"https://api.sofascore.com/api/v1/search/all?q={q}&page=0",
-            headers=SF_HEADERS, timeout=12
+            headers=SF_HEADERS, timeout=20
         )
         results = json.loads(r.text).get("results", [])
         ref_id = None
@@ -270,15 +302,15 @@ def _get_faltas_media(arbitro_nome: str, n_jogos: int = 5) -> str:
             return "—"
 
         # 2. Últimos jogos
-        r2     = http_client.get(
+        r2 = http_client.get(
             f"https://api.sofascore.com/api/v1/referee/{ref_id}/events/last/0",
-            headers=SF_HEADERS, timeout=12
+            headers=SF_HEADERS, timeout=20
         )
         events = json.loads(r2.text).get("events", [])
 
         # 3. Faltas dos últimos jogos do Brasileirão
         fouls = []
-        for ev in events[:15]:
+        for ev in events[:12]:
             tid = (ev.get("tournament", {})
                      .get("uniqueTournament", {})
                      .get("id"))
@@ -290,7 +322,7 @@ def _get_faltas_media(arbitro_nome: str, n_jogos: int = 5) -> str:
             try:
                 r3 = http_client.get(
                     f"https://api.sofascore.com/api/v1/event/{eid}/statistics",
-                    headers=SF_HEADERS, timeout=10
+                    headers=SF_HEADERS, timeout=20
                 )
                 stats = json.loads(r3.text).get("statistics", [])
                 for period in stats:
@@ -302,7 +334,6 @@ def _get_faltas_media(arbitro_nome: str, n_jogos: int = 5) -> str:
                                 h = _safe_int(item.get("home", 0))
                                 a = _safe_int(item.get("away", 0))
                                 fouls.append(h + a)
-                time.sleep(0.1)
             except Exception:
                 continue
             if len(fouls) >= n_jogos:
