@@ -1,0 +1,5 @@
+streamlit>=1.37.0
+wrapper-tls-requests
+beautifulsoup4
+pandas
+openpyxl

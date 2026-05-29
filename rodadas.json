@@ -1,0 +1,1598 @@
+{
+  "1": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Santos"
+    }
+  ],
+  "2": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Mirassol"
+    }
+  ],
+  "3": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Coritiba"
+    }
+  ],
+  "4": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Internacional"
+    }
+  ],
+  "5": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Fluminense"
+    }
+  ],
+  "6": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Grêmio"
+    }
+  ],
+  "7": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Corinthians"
+    }
+  ],
+  "8": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Bahia"
+    }
+  ],
+  "9": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Atlético"
+    }
+  ],
+  "10": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Vitória"
+    }
+  ],
+  "11": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Vasco"
+    }
+  ],
+  "12": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Botafogo"
+    }
+  ],
+  "13": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Cruzeiro"
+    }
+  ],
+  "14": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Red Bull Bragantino"
+    }
+  ],
+  "15": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Palmeiras"
+    }
+  ],
+  "16": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Remo"
+    }
+  ],
+  "17": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Athletico-PR"
+    }
+  ],
+  "18": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "São Paulo"
+    }
+  ],
+  "19": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Flamengo"
+    }
+  ],
+  "20": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Vitória"
+    }
+  ],
+  "21": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Vasco"
+    }
+  ],
+  "22": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Atlético"
+    }
+  ],
+  "23": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Bahia"
+    }
+  ],
+  "24": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "São Paulo"
+    }
+  ],
+  "25": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Coritiba"
+    }
+  ],
+  "26": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Flamengo"
+    }
+  ],
+  "27": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Internacional"
+    }
+  ],
+  "28": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Santos"
+    }
+  ],
+  "29": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Grêmio"
+    }
+  ],
+  "30": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Athletico-PR"
+    }
+  ],
+  "31": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Red Bull Bragantino"
+    }
+  ],
+  "32": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Fluminense"
+    }
+  ],
+  "33": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Botafogo"
+    }
+  ],
+  "34": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Mirassol"
+    }
+  ],
+  "35": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Palmeiras"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Chapecoense"
+    }
+  ],
+  "36": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Corinthians"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Cruzeiro"
+    }
+  ],
+  "37": [
+    {
+      "mandante": "Fluminense",
+      "visitante": "Cruzeiro"
+    },
+    {
+      "mandante": "Botafogo",
+      "visitante": "Bahia"
+    },
+    {
+      "mandante": "São Paulo",
+      "visitante": "Remo"
+    },
+    {
+      "mandante": "Corinthians",
+      "visitante": "Grêmio"
+    },
+    {
+      "mandante": "Mirassol",
+      "visitante": "Athletico-PR"
+    },
+    {
+      "mandante": "Atlético",
+      "visitante": "Vasco"
+    },
+    {
+      "mandante": "Internacional",
+      "visitante": "Red Bull Bragantino"
+    },
+    {
+      "mandante": "Coritiba",
+      "visitante": "Flamengo"
+    },
+    {
+      "mandante": "Vitória",
+      "visitante": "Santos"
+    },
+    {
+      "mandante": "Chapecoense",
+      "visitante": "Palmeiras"
+    }
+  ],
+  "38": [
+    {
+      "mandante": "Flamengo",
+      "visitante": "Chapecoense"
+    },
+    {
+      "mandante": "Vasco",
+      "visitante": "Vitória"
+    },
+    {
+      "mandante": "Santos",
+      "visitante": "Botafogo"
+    },
+    {
+      "mandante": "Palmeiras",
+      "visitante": "Coritiba"
+    },
+    {
+      "mandante": "Red Bull Bragantino",
+      "visitante": "Fluminense"
+    },
+    {
+      "mandante": "Cruzeiro",
+      "visitante": "Internacional"
+    },
+    {
+      "mandante": "Grêmio",
+      "visitante": "Mirassol"
+    },
+    {
+      "mandante": "Athletico-PR",
+      "visitante": "São Paulo"
+    },
+    {
+      "mandante": "Bahia",
+      "visitante": "Atlético"
+    },
+    {
+      "mandante": "Remo",
+      "visitante": "Corinthians"
+    }
+  ]
+}

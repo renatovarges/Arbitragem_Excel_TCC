@@ -1,0 +1,17 @@
+# Segredos
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.env
+
+# Outputs
+*.xlsx
+
+# Misc
+debug_*.py
+test_*.py
