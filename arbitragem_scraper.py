@@ -76,7 +76,7 @@ def _load_confrontos(rodada_num: int) -> list:
 # FUNÇÃO PRINCIPAL
 # ---------------------------------------------------------------------------
 
-@st.cache_data(ttl=1800, show_spinner=False)
+@st.cache_data(ttl=43200, show_spinner=False)   # 12h: re-visualizar não gasta cota
 def get_rodada_completa(rodada_num: int, buscar_faltas: bool = True) -> list[dict]:
     """
     Retorna lista de dicts (um por jogo):
@@ -202,7 +202,7 @@ def _get_escala_tm(rodada_num: int, confrontos: list) -> dict:
 # TRANSFERMARKT — stats de todos os árbitros da temporada
 # ---------------------------------------------------------------------------
 
-@st.cache_data(ttl=3600, show_spinner=False)
+@st.cache_data(ttl=43200, show_spinner=False)   # 12h
 def _get_all_stats_tm(rodada_num: int) -> dict:
     """
     Retorna {norm_nome: {jogos, amarelos_total, vermelhos_total, penaltis}}.
@@ -251,7 +251,7 @@ def _get_all_stats_tm(rodada_num: int) -> dict:
 # SOFASCORE — média de faltas por árbitro (busca por nome)
 # ---------------------------------------------------------------------------
 
-@st.cache_data(ttl=86400, show_spinner=False)
+@st.cache_data(ttl=604800, show_spinner=False)   # 7 dias: faltas mudam pouco
 def _faltas_em_lote(nomes: tuple) -> dict:
     """
     Calcula a média de faltas de vários árbitros em paralelo.
