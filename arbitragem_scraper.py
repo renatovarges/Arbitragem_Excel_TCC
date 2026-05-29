@@ -1,7 +1,7 @@
 """
 arbitragem_scraper.py
 Busca escala de árbitros no Transfermarkt e estatísticas da temporada.
-Fouls complementados via Sofascore.
+Faltas médias complementadas via Sofascore (busca por nome).
 """
 import json
 import re
@@ -27,9 +27,7 @@ SF_HEADERS = {
     "Referer": "https://www.sofascore.com/",
 }
 
-# Sofascore: Brasileirão Serie A
-SF_TOURNAMENT_ID = 325
-SF_SEASON_ID     = 87678   # 2026
+SF_TOURNAMENT_ID = 325   # Brasileirão Série A no Sofascore
 
 
 # ---------------------------------------------------------------------------
@@ -37,9 +35,9 @@ SF_SEASON_ID     = 87678   # 2026
 # ---------------------------------------------------------------------------
 
 def _norm(s: str) -> str:
-    """Lowercase sem acentos."""
+    """Lowercase sem acentos, só letras/números/espaço."""
     n = unicodedata.normalize("NFKD", str(s)).encode("ASCII", "ignore").decode()
-    return re.sub(r"\s+", " ", n).lower().strip()
+    return re.sub(r"[^a-z0-9 ]", "", n.lower()).strip()
 
 
 def _safe_int(val, default: int = 0) -> int:
@@ -47,6 +45,26 @@ def _safe_int(val, default: int = 0) -> int:
         return int(str(val).replace("-", "0").strip() or 0)
     except (ValueError, TypeError):
         return default
+
+
+def _team_match(team_json: str, tm_title: str) -> bool:
+    """Casa um nome de time do JSON com o título do Transfermarkt."""
+    tj = _norm(team_json)
+    tt = _norm(tm_title)
+    if not tj or not tt:
+        return False
+    if tj[:5] in tt or tt[:5] in tj:
+        return True
+    # Qualquer palavra significativa em comum
+    return any(w in tt for w in tj.split() if len(w) > 3)
+
+
+def _name_match(nome_a: str, nome_b: str) -> bool:
+    """Casa dois nomes de árbitro (normalizado)."""
+    a, b = _norm(nome_a), _norm(nome_b)
+    if not a or not b:
+        return False
+    return a == b or a[:12] in b or b[:12] in a
 
 
 def _load_confrontos(rodada_num: int) -> list:
@@ -60,22 +78,16 @@ def _load_confrontos(rodada_num: int) -> list:
 # ---------------------------------------------------------------------------
 
 @st.cache_data(ttl=1800, show_spinner=False)
-def get_rodada_completa(rodada_num: int) -> list[dict]:
+def get_rodada_completa(rodada_num: int, buscar_faltas: bool = True) -> list[dict]:
     """
-    Retorna lista de 10 dicts, um por jogo:
+    Retorna lista de dicts (um por jogo):
     {mandante, visitante, arbitro, jogos, penaltis,
      amarelos_media, vermelhos_total, faltas_media}
     """
     confrontos = _load_confrontos(rodada_num)
 
-    # 1. Escala (árbitro por jogo) ─ Transfermarkt spieltag
-    escala = _get_escala_tm(rodada_num, confrontos)
-
-    # 2. Stats de todos os árbitros na temporada ─ TM schiedsrichter
-    stats_map = _get_all_stats_tm(rodada_num)
-
-    # 3. Mapa de IDs Sofascore (para fouls)
-    sf_id_map = _build_sf_id_map()
+    escala    = _get_escala_tm(rodada_num, confrontos)      # {(mand,vis): arbitro}
+    stats_map = _get_all_stats_tm(rodada_num)               # {norm_nome: stats}
 
     resultado = []
     for jogo in confrontos:
@@ -85,14 +97,13 @@ def get_rodada_completa(rodada_num: int) -> list[dict]:
 
         arb_nome = escala.get(key, "A confirmar")
 
-        # Stats do árbitro no Transfermarkt
+        # Stats do árbitro (Transfermarkt)
         stats = {}
-        arb_key = _norm(arb_nome)
-        # Busca fuzzy no mapa
-        for k, v in stats_map.items():
-            if arb_key[:8] and arb_key[:8] in k:
-                stats = v
-                break
+        if arb_nome not in ("A confirmar", "", "—"):
+            for k, v in stats_map.items():
+                if _name_match(arb_nome, k):
+                    stats = v
+                    break
 
         jogos    = stats.get("jogos", "—")
         am_total = stats.get("amarelos_total", 0)
@@ -102,12 +113,10 @@ def get_rodada_completa(rodada_num: int) -> list[dict]:
             else "—"
         )
 
-        # Fouls via Sofascore
+        # Faltas (Sofascore, best-effort)
         faltas = "—"
-        if arb_nome not in ("A confirmar", "—", ""):
-            sf_id = sf_id_map.get(_norm(arb_nome))
-            if sf_id:
-                faltas = _get_faltas_media(sf_id)
+        if buscar_faltas and arb_nome not in ("A confirmar", "", "—"):
+            faltas = _get_faltas_media(arb_nome)
 
         resultado.append({
             "mandante":        mand,
@@ -124,238 +133,184 @@ def get_rodada_completa(rodada_num: int) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
-# TRANSFERMARKT — escala por rodada
+# TRANSFERMARKT — escala por rodada (baseado em div.box)
 # ---------------------------------------------------------------------------
 
 def _get_escala_tm(rodada_num: int, confrontos: list) -> dict:
     """
-    Scrape a página de spieltag do TM e associa árbitro a cada confronto.
-    Retorna dict {(norm_mand, norm_vis): nome_arbitro}.
+    Para cada div.box que contém um link de árbitro, extrai
+    (mandante, visitante, árbitro) e casa com os confrontos do JSON.
+    Retorna {(norm_mand, norm_vis): nome_arbitro}.
     """
     url = (
         "https://www.transfermarkt.com.br/campeonato-brasileiro-serie-a/"
         f"spieltag/wettbewerb/BRA1/plus/?saison_id=2025&spieltag={rodada_num}"
     )
+    games = []
     try:
         r    = tls_requests.get(url, headers=TM_HEADERS, timeout=20)
         soup = BeautifulSoup(r.text, "html.parser")
-        text = soup.get_text(separator="\n")
-        lines = [l.strip() for l in text.split("\n") if l.strip()]
-    except Exception:
-        return {}
 
-    result   = {}
-    assigned = set()
-
-    for i, line in enumerate(lines):
-        # Detectar "Árbitro:" (com ou sem acentos)
-        if not re.search(r"[Áa]rbitro\s*:", line, re.IGNORECASE):
-            continue
-
-        raw_arb = re.split(r"[Áa]rbitro\s*:", line, flags=re.IGNORECASE)[-1].strip()
-        if not raw_arb or "desconhecido" in raw_arb.lower():
-            arb_nome = "A confirmar"
-        else:
-            arb_nome = raw_arb
-
-        # Contexto das linhas anteriores para identificar os times
-        context = " ".join(lines[max(0, i - 30):i]).lower()
-
-        best       = None
-        best_score = 0
-        for jogo in confrontos:
-            key = (_norm(jogo["mandante"]), _norm(jogo["visitante"]))
-            if key in assigned:
+        refs = soup.find_all(
+            "a", href=lambda h: h and "/profil/schiedsrichter/" in h
+        )
+        for ref in refs:
+            # Subir até o div.box do jogo
+            box = ref
+            while box is not None and not (
+                box.get("class") and "box" in box.get("class")
+            ):
+                box = box.parent
+            if box is None:
                 continue
-            score = 0
-            for team in (jogo["mandante"], jogo["visitante"]):
-                t_n = _norm(team)
-                # Testar variações do nome (primeiras letras, primeira palavra)
-                first_word = t_n.split()[0][:5]
-                if t_n[:6] in context:
-                    score += 2
-                elif first_word in context:
-                    score += 1
-            if score > best_score:
-                best_score = score
-                best = jogo
 
-        key = (_norm(best["mandante"]), _norm(best["visitante"])) if best else None
-        if key and best_score >= 1:
-            result[key] = arb_nome
-            assigned.add(key)
-        elif arb_nome != "A confirmar":
-            # Sem match claro: associa ao próximo confronto sem árbitro (ordem TM)
-            for jogo in confrontos:
-                k = (_norm(jogo["mandante"]), _norm(jogo["visitante"]))
-                if k not in result:
-                    result[k] = arb_nome
-                    assigned.add(k)
-                    break
+            # Times = títulos únicos dos links de clube, em ordem
+            seen = []
+            for a in box.find_all(
+                "a", href=lambda h: h and "/verein/" in h
+            ):
+                t = a.get("title")
+                if t and t not in seen:
+                    seen.append(t)
 
-    # Completar não encontrados
+            arb = ref.get_text(strip=True)
+            if len(seen) >= 2 and arb:
+                games.append({"home": seen[0], "away": seen[1], "arb": arb})
+    except Exception:
+        games = []
+
+    # Casar cada confronto do JSON com os jogos do TM
+    result = {}
     for jogo in confrontos:
         key = (_norm(jogo["mandante"]), _norm(jogo["visitante"]))
-        if key not in result:
-            result[key] = "A confirmar"
+        arb = "A confirmar"
+        for g in games:
+            if (_team_match(jogo["mandante"], g["home"]) and
+                    _team_match(jogo["visitante"], g["away"])):
+                arb = g["arb"]
+                break
+        result[key] = arb
 
     return result
 
 
 # ---------------------------------------------------------------------------
-# TRANSFERMARKT — stats de todos os árbitros
+# TRANSFERMARKT — stats de todos os árbitros da temporada
 # ---------------------------------------------------------------------------
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def _get_all_stats_tm(rodada_num: int) -> dict:
     """
-    Retorna dict {norm_nome: {jogos, amarelos_total, vermelhos_total, penaltis, ...}}.
-    Colunas TM: nome | país | estreia | jogos | amarelos | duplo_am | verm_dir | penaltis
+    Retorna {norm_nome: {jogos, amarelos_total, vermelhos_total, penaltis}}.
+    Colunas TM: vals[2]=nome, vals[5]=jogos, vals[6]=amarelos,
+                vals[7]=duplo_amarelo, vals[8]=verm_direto, vals[9]=penaltis
     """
     url = (
         "https://www.transfermarkt.com.br/campeonato-brasileiro-serie-a/"
         f"schiedsrichter/wettbewerb/BRA1/saison_id/2025/spieltag/{rodada_num}"
     )
+    result = {}
     try:
-        r    = tls_requests.get(url, headers=TM_HEADERS, timeout=20)
-        soup = BeautifulSoup(r.text, "html.parser")
+        r      = tls_requests.get(url, headers=TM_HEADERS, timeout=20)
+        soup   = BeautifulSoup(r.text, "html.parser")
         tables = soup.find_all("table")
         if len(tables) < 2:
             return {}
         table = tables[1]
+
+        for row in table.find_all("tr"):
+            vals = [c.get_text(strip=True) for c in row.find_all("td")]
+            if len(vals) < 10 or not vals[2]:
+                continue
+            if not any(v.isdigit() for v in "".join(vals[5:])):
+                continue
+
+            jogos = _safe_int(vals[5])
+            if jogos == 0:
+                continue
+
+            duplo_am = _safe_int(vals[7])
+            verm_dir = _safe_int(vals[8])
+            result[_norm(vals[2])] = {
+                "jogos":           jogos,
+                "amarelos_total":  _safe_int(vals[6]),
+                "vermelhos_total": duplo_am + verm_dir,
+                "penaltis":        _safe_int(vals[9]),
+            }
     except Exception:
-        return {}
-
-    result = {}
-    for row in table.find_all("tr"):
-        cells = row.find_all("td")
-        vals  = [c.get_text(strip=True) for c in cells]
-
-        # Precisamos de pelo menos 10 células; nome em vals[2], números em vals[5..9]
-        if len(vals) < 10 or not vals[2]:
-            continue
-        if not any(v.isdigit() for v in "".join(vals[5:])):
-            continue
-
-        nome     = vals[2]
-        jogos    = _safe_int(vals[5])
-        amarelos = _safe_int(vals[6])
-        duplo_am = _safe_int(vals[7])
-        verm_dir = _safe_int(vals[8])
-        penaltis = _safe_int(vals[9])
-
-        if jogos == 0:
-            continue
-
-        result[_norm(nome)] = {
-            "jogos":           jogos,
-            "amarelos_total":  amarelos,
-            "duplo_amarelo":   duplo_am,
-            "vermelho_direto": verm_dir,
-            "vermelhos_total": duplo_am + verm_dir,
-            "penaltis":        penaltis,
-        }
+        return result
 
     return result
 
 
 # ---------------------------------------------------------------------------
-# SOFASCORE — mapa nome → ID do árbitro
+# SOFASCORE — média de faltas por árbitro (busca por nome)
 # ---------------------------------------------------------------------------
 
 @st.cache_data(ttl=86400, show_spinner=False)
-def _build_sf_id_map() -> dict:
+def _get_faltas_media(arbitro_nome: str, n_jogos: int = 5) -> str:
     """
-    Constrói {norm_nome_arbitro: sofascore_id} a partir das últimas rodadas
-    completas do Brasileirão no Sofascore.
+    Busca o árbitro pelo nome no Sofascore e calcula a média de faltas
+    (home + away) dos últimos n_jogos no Brasileirão.
     """
-    result = {}
     try:
-        for round_num in range(1, 20):
-            url = (
-                f"https://api.sofascore.com/api/v1/unique-tournament/"
-                f"{SF_TOURNAMENT_ID}/season/{SF_SEASON_ID}/events/round/{round_num}"
-            )
-            r      = tls_requests.get(url, headers=SF_HEADERS, timeout=12)
-            events = json.loads(r.text).get("events", [])
-            if not events:
+        # 1. Buscar ID do árbitro
+        q = arbitro_nome.replace(" ", "%20")
+        r = tls_requests.get(
+            f"https://api.sofascore.com/api/v1/search/all?q={q}&page=0",
+            headers=SF_HEADERS, timeout=12
+        )
+        results = json.loads(r.text).get("results", [])
+        ref_id = None
+        for item in results:
+            if item.get("type") == "referee":
+                ref_id = item.get("entity", {}).get("id")
                 break
+        if not ref_id:
+            return "—"
 
-            for ev in events:
-                ev_id  = ev.get("id")
-                status = ev.get("status", {}).get("type", "")
-                if status != "finished" or not ev_id:
-                    continue
-                try:
-                    r2         = tls_requests.get(
-                        f"https://api.sofascore.com/api/v1/event/{ev_id}",
-                        headers=SF_HEADERS, timeout=10
-                    )
-                    event_data = json.loads(r2.text).get("event", {})
-                    ref        = event_data.get("referee") or {}
-                    if ref.get("name") and ref.get("id"):
-                        result[_norm(ref["name"])] = ref["id"]
-                    time.sleep(0.15)
-                except Exception:
-                    continue
-            time.sleep(0.3)
-    except Exception:
-        pass
-    return result
+        # 2. Últimos jogos
+        r2     = tls_requests.get(
+            f"https://api.sofascore.com/api/v1/referee/{ref_id}/events/last/0",
+            headers=SF_HEADERS, timeout=12
+        )
+        events = json.loads(r2.text).get("events", [])
 
-
-# ---------------------------------------------------------------------------
-# SOFASCORE — média de faltas
-# ---------------------------------------------------------------------------
-
-@st.cache_data(ttl=86400, show_spinner=False)
-def _get_faltas_media(sf_ref_id: int, n_jogos: int = 10) -> str:
-    """Média de faltas dos últimos n_jogos deste árbitro no Brasileirão."""
-    try:
-        url    = f"https://api.sofascore.com/api/v1/referee/{sf_ref_id}/events/last/0"
-        r      = tls_requests.get(url, headers=SF_HEADERS, timeout=12)
-        events = json.loads(r.text).get("events", [])
-
-        fouls_list = []
-        for ev in events[:25]:
-            # Filtrar só Brasileirão
-            tour_id = (
-                ev.get("tournament", {})
-                  .get("uniqueTournament", {})
-                  .get("id")
-            )
-            if tour_id != SF_TOURNAMENT_ID:
+        # 3. Faltas dos últimos jogos do Brasileirão
+        fouls = []
+        for ev in events[:15]:
+            tid = (ev.get("tournament", {})
+                     .get("uniqueTournament", {})
+                     .get("id"))
+            if tid != SF_TOURNAMENT_ID:
                 continue
-
-            ev_id = ev.get("id")
-            if not ev_id:
+            eid = ev.get("id")
+            if not eid:
                 continue
-
             try:
-                r2    = tls_requests.get(
-                    f"https://api.sofascore.com/api/v1/event/{ev_id}/statistics",
+                r3 = tls_requests.get(
+                    f"https://api.sofascore.com/api/v1/event/{eid}/statistics",
                     headers=SF_HEADERS, timeout=10
                 )
-                stats = json.loads(r2.text).get("statistics", [])
-                for period_data in stats:
-                    if period_data.get("period") != "ALL":
+                stats = json.loads(r3.text).get("statistics", [])
+                for period in stats:
+                    if period.get("period") != "ALL":
                         continue
-                    for group in period_data.get("groups", []):
+                    for group in period.get("groups", []):
                         for item in group.get("statisticsItems", []):
                             if item.get("name", "").lower() == "fouls":
                                 h = _safe_int(item.get("home", 0))
                                 a = _safe_int(item.get("away", 0))
-                                fouls_list.append(h + a)
-                time.sleep(0.15)
+                                fouls.append(h + a)
+                time.sleep(0.1)
             except Exception:
                 continue
-
-            if len(fouls_list) >= n_jogos:
+            if len(fouls) >= n_jogos:
                 break
 
-        if not fouls_list:
+        if not fouls:
             return "—"
-        return f"{sum(fouls_list) / len(fouls_list):.1f}"
+        return f"{sum(fouls) / len(fouls):.1f}"
 
     except Exception:
         return "—"
