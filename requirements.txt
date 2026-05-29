@@ -1,5 +1,5 @@
 streamlit>=1.37.0
-wrapper-tls-requests
+curl_cffi
 beautifulsoup4
 pandas
 openpyxl

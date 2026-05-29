@@ -9,7 +9,7 @@ import time
 import unicodedata
 from pathlib import Path
 
-import tls_requests
+import http_client
 from bs4 import BeautifulSoup
 import streamlit as st
 
@@ -148,7 +148,7 @@ def _get_escala_tm(rodada_num: int, confrontos: list) -> dict:
     )
     games = []
     try:
-        r    = tls_requests.get(url, headers=TM_HEADERS, timeout=20)
+        r    = http_client.get(url, headers=TM_HEADERS, timeout=20)
         soup = BeautifulSoup(r.text, "html.parser")
 
         refs = soup.find_all(
@@ -211,7 +211,7 @@ def _get_all_stats_tm(rodada_num: int) -> dict:
     )
     result = {}
     try:
-        r      = tls_requests.get(url, headers=TM_HEADERS, timeout=20)
+        r      = http_client.get(url, headers=TM_HEADERS, timeout=20)
         soup   = BeautifulSoup(r.text, "html.parser")
         tables = soup.find_all("table")
         if len(tables) < 2:
@@ -256,7 +256,7 @@ def _get_faltas_media(arbitro_nome: str, n_jogos: int = 5) -> str:
     try:
         # 1. Buscar ID do árbitro
         q = arbitro_nome.replace(" ", "%20")
-        r = tls_requests.get(
+        r = http_client.get(
             f"https://api.sofascore.com/api/v1/search/all?q={q}&page=0",
             headers=SF_HEADERS, timeout=12
         )
@@ -270,7 +270,7 @@ def _get_faltas_media(arbitro_nome: str, n_jogos: int = 5) -> str:
             return "—"
 
         # 2. Últimos jogos
-        r2     = tls_requests.get(
+        r2     = http_client.get(
             f"https://api.sofascore.com/api/v1/referee/{ref_id}/events/last/0",
             headers=SF_HEADERS, timeout=12
         )
@@ -288,7 +288,7 @@ def _get_faltas_media(arbitro_nome: str, n_jogos: int = 5) -> str:
             if not eid:
                 continue
             try:
-                r3 = tls_requests.get(
+                r3 = http_client.get(
                     f"https://api.sofascore.com/api/v1/event/{eid}/statistics",
                     headers=SF_HEADERS, timeout=10
                 )
