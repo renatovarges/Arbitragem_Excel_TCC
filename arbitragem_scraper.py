@@ -24,7 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent
 TM_HEADERS = {"Accept-Language": "pt-BR,pt;q=0.9"}
 SF_HEADERS = {"Accept": "application/json"}
 
-SF_TOURNAMENT_ID = 325   # Brasileirão Série A no Sofascore
+SF_TOURNAMENT_ID = 325        # Brasileirão Série A no Sofascore
+CBF_CAMPEONATO_ID = 1260611   # Brasileirão Série A 2026 na CBF
 
 
 # ---------------------------------------------------------------------------
@@ -114,48 +115,44 @@ def get_lista_arbitros() -> list:
 
 
 # ---------------------------------------------------------------------------
-# ESCALA AUTOMÁTICA (Transfermarkt) — quando já publicada
+# ESCALA AUTOMÁTICA (CBF) — fonte oficial, publica primeiro
 # ---------------------------------------------------------------------------
 
-@st.cache_data(ttl=21600, show_spinner=False)   # 6h
+@st.cache_data(ttl=10800, show_spinner=False)   # 3h
 def get_escala_auto(rodada_num: int) -> dict:
     """
-    {(norm_mand, norm_vis): nome_arbitro} para a rodada, lendo o TM.
-    Jogos sem árbitro publicado ficam de fora do dicionário.
+    {(norm_mand, norm_vis): nome_arbitro} para a rodada, lendo a API da CBF.
+    Pega o árbitro principal (funcao == "Arbitro") de cada jogo.
+    Jogos sem árbitro definido ficam de fora.
     """
     confrontos = load_confrontos(rodada_num)
     url = (
-        "https://www.transfermarkt.com.br/campeonato-brasileiro-serie-a/"
-        f"spieltag/wettbewerb/BRA1/plus/?saison_id=2025&spieltag={rodada_num}"
+        f"https://www.cbf.com.br/api/cbf/jogos/campeonato/"
+        f"{CBF_CAMPEONATO_ID}/rodada/{rodada_num}/fase"
     )
-    games = []
+    cbf_games = []
     try:
-        r    = http_client.get(url, headers=TM_HEADERS, timeout=60)
-        soup = BeautifulSoup(r.text, "html.parser")
-        for ref in soup.find_all(
-            "a", href=lambda h: h and "/profil/schiedsrichter/" in h
-        ):
-            box = ref
-            while box is not None and not (
-                box.get("class") and "box" in box.get("class")
-            ):
-                box = box.parent
-            if box is None:
-                continue
-            seen = []
-            for a in box.find_all("a", href=lambda h: h and "/verein/" in h):
-                t = a.get("title")
-                if t and t not in seen:
-                    seen.append(t)
-            arb = ref.get_text(strip=True)
-            if len(seen) >= 2 and arb:
-                games.append({"home": seen[0], "away": seen[1], "arb": arb})
+        r = http_client.get(url, timeout=60)
+        data = json.loads(r.text)
+        for grupo in data.get("jogos", []):
+            for jg in grupo.get("jogo", []):
+                arb = next(
+                    (a.get("nome") for a in jg.get("arbitros", [])
+                     if a.get("funcao") == "Arbitro"),
+                    None,
+                )
+                if arb:
+                    cbf_games.append({
+                        "home": jg.get("mandante", {}).get("nome", ""),
+                        "away": jg.get("visitante", {}).get("nome", ""),
+                        "arb":  arb,
+                    })
     except Exception:
-        games = []
+        cbf_games = []
 
     result = {}
     for jogo in confrontos:
-        for g in games:
+        for g in cbf_games:
             if (_team_match(jogo["mandante"], g["home"]) and
                     _team_match(jogo["visitante"], g["away"])):
                 result[(_norm(jogo["mandante"]), _norm(jogo["visitante"]))] = g["arb"]
@@ -211,6 +208,21 @@ def montar_dados(rodada_num: int, escala_por_indice: dict) -> list[dict]:
             "faltas_media":    faltas_map.get(arb, "—"),
         })
     return resultado
+
+
+@st.cache_data(ttl=10800, show_spinner=False)   # 3h
+def get_rodada_completa(rodada_num: int) -> list[dict]:
+    """
+    Fluxo 100% automático:
+    escala da CBF + estatísticas do Transfermarkt + faltas do Sofascore.
+    """
+    escala     = get_escala_auto(rodada_num)         # CBF
+    confrontos = load_confrontos(rodada_num)
+    escala_idx = {
+        i: escala.get((_norm(c["mandante"]), _norm(c["visitante"])), "A confirmar")
+        for i, c in enumerate(confrontos)
+    }
+    return montar_dados(rodada_num, escala_idx)
 
 
 # ---------------------------------------------------------------------------

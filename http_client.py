@@ -64,10 +64,12 @@ def get(url: str, headers: dict | None = None, timeout: int = 45):
         # Pelo proxy não precisamos de impersonate (o ScraperAPI cuida disso)
         return _creq.get(proxied, headers=headers or {}, timeout=timeout)
 
-    # Fallback direto (local / IP residencial)
+    # Fallback direto (local / IP residencial).
+    # verify=False evita erro de certificado do curl_cffi em alguns hosts (ex.: CBF).
     return _creq.get(
         url,
         headers=headers or {},
         impersonate=_IMPERSONATE,
         timeout=timeout,
+        verify=False,
     )
